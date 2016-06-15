@@ -6,10 +6,12 @@ function get_fake_db_path() {
   return wp_upload_dir()['path'] . '/fake_player.json';
 }
 
-$fieldMappings = [
-  ['firstName', '1.3'],
-  ['lastName', '1.6']
-];
+function get_field_mappings() {
+  return [
+    ['firstName', '1.3'],
+    ['lastName', '1.6']
+  ];
+}
 
 function gf_to_object( $field_mappings, $entry ) {
   $player = [];
@@ -24,7 +26,7 @@ function gf_to_object( $field_mappings, $entry ) {
 }
 
 function gravityforms_to_player( $entry ) {
-    return gf_to_object( $fieldMappings, $entry );
+    return gf_to_object( get_field_mappings(), $entry );
 }
 
 /*
