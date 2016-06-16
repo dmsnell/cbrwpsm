@@ -1,7 +1,7 @@
 <?php
 function display_fields( $player ) {  
-  $identity = function( $a ) { return $a; }
-  $formatDate = function( $d ) { return strftime( '%b', $d ); }
+  $identity = function( $a ) { return $a; };
+  $formatDate = function( $d ) { return strftime( '%b', $d ); };
   
   $playerFields = [
     [ 'firstName', 'First Name' ],
