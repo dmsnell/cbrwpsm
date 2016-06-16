@@ -32,6 +32,9 @@ array_walk( $playerFields, function( $field ) use ( $payer ) {
 
 <?php
 function display_fields( $player ) {  
+  $identity = function( $a ) { return $a; }
+  $formatDate = function( $d ) { return strftime( '%b', $d ); }
+  
   $playerFields = [
     [ 'firstName', 'First Name' ],
     [ 'lastName', 'Last Name' ],
@@ -43,9 +46,6 @@ function display_fields( $player ) {
   } );
 
   return array_map( function( $field ) use ( $identity, $player ) {
-    $identity = function( $a ) { return $a; }
-    $formatDate = function( $d ) { return strftime( '%b', $d ); }
-    
     list( $name, $label, $transform ) = array_pad( $field, 3, $identity );
 
     return [ 'label' => $label, 'value' => $transform( $player->$name ) ];
