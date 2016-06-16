@@ -6,17 +6,6 @@
   <h3>Position: <?= $player->position ?></h3>
 <?php } ?>
 
-<?php 
-$identity = function( $a ) { return $a; }
-$formatDate = function( $d ) { return strftime( '%b', $d ); }
-
-$playerFields = [
-  [ 'firstName', 'First Name' ],
-  [ 'lastName', 'Last Name' ],
-  [ 'birthDate', 'Birth Date', $formatDate ]
-];
-?>
-
 <h2>Player</h2>
 <?php 
 array_walk( $playerFields, function( $field ) use ( $payer ) {
@@ -45,11 +34,17 @@ function display_fields( $player ) {
     return isset( $player->$field[0] );
   } );
 
-  $display_fields = array_map( function( $field ) use ( $identity, $player ) {
-    list( $name, $label, $transform ) = array_pad( $field, 3, $identity );
+  $display_fields = array_reduce(
+    $player_fields, 
+    function( $fields, $field ) use ( $identity, $player ) {
+      list( $name, $label, $transform ) = array_pad( $field, 3, $identity );
 
-    return [ 'label' => $label, 'value' => $transform( $player->$name ) ];
-  }, $playerFields );
+      $fields[ $label ] = $transform( $player->$name );
+
+      return $fields;
+    },
+    []
+  );
 
   $display_fields[ 'Full Name' ] = sprintf(
     '%s %s',
